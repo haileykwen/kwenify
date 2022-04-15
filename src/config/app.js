@@ -1,9 +1,10 @@
-import { HomeView, DocumentationView } from "./views/index_view.js";
-import { HomeController, DocumentationController } from "./controllers/index_controller.js";
+import Routes from "/src/config/routes.js";
 
-const path_to_regex = path => new RegExp("^" + path.replace(/\//g, "\\/").replace(/:\w+/g, "(.+)") + "$");
+function path_to_regex(path) {
+    return new RegExp("^" + path.replace(/\//g, "\\/").replace(/:\w+/g, "(.+)") + "$");
+};
 
-const get_params = match => {
+function get_params(match) {
     const values = match.result.slice(1);
     const keys = Array.from(match.route.path.matchAll(/:(\w+)/g)).map(result => result[1]);
 
@@ -12,16 +13,13 @@ const get_params = match => {
     }));
 };
 
-const navigate_to = url => {
+function navigate_to(url) {
     history.pushState(null, null, url);
     router();
 };
 
-const router = async () => {
-    const routes = [
-        { path: "/", view: HomeView, controller: HomeController },
-        { path: "/documentation", view: DocumentationView, controller: DocumentationController },
-    ];
+async function router() {
+    const routes = Routes();
 
     // Test each route for potential match
     const potential_matches = routes.map(route => {
@@ -53,7 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.addEventListener("click", e => {
         if (e.target.matches("[data-link]")) {
             e.preventDefault();
-            navigate_to(e.target.href);
+            e.target.href && navigate_to(e.target.href);
         };
     });
 

@@ -1,9 +1,9 @@
-import CoreView from "./core_view.js";
+import CoreView from "/src/config/views/core.view.js";
 
 export default class extends CoreView {
     constructor(params) {
         super(params);
-        this.set_title("Home");
+        this.set_title("Documentation");
     };
 
     async get_html() {
@@ -17,7 +17,7 @@ export default class extends CoreView {
                     min-height: 100vh;
                 "
             >
-                <h1>Kwenify</h1>
+                <h1>Documentation</h1>
                 <p>version 1.0.0</p>
             </div>
         `;
