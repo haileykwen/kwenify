@@ -1,5 +1,5 @@
-import Home from "./views/home.js";
-import Documentation from "./views/documentation.js";
+import { HomeView, DocumentationView } from "./views/index_view.js";
+import { HomeController, DocumentationController } from "./controllers/index_controller.js";
 
 const path_to_regex = path => new RegExp("^" + path.replace(/\//g, "\\/").replace(/:\w+/g, "(.+)") + "$");
 
@@ -19,8 +19,8 @@ const navigate_to = url => {
 
 const router = async () => {
     const routes = [
-        { path: "/", view: Home },
-        { path: "/documentation", view: Documentation },
+        { path: "/", view: HomeView, controller: HomeController },
+        { path: "/documentation", view: DocumentationView, controller: DocumentationController },
     ];
 
     // Test each route for potential match
@@ -43,6 +43,8 @@ const router = async () => {
     const view = new match.route.view(get_params(match));
 
     document.querySelector("#app").innerHTML = await view.get_html();
+    
+    if (match.route.controller) match.route.controller();
 };
 
 window.addEventListener("popstate", router);

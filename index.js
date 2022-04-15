@@ -4,7 +4,7 @@ const port = process.env.PORT || 8000;
 
 const app = express();
 
-app.use("/static", express.static(path.resolve(__dirname, "src", "static")));
+app.use("/src", express.static(path.resolve(__dirname, "src")));
 
 app.get("/*", (req, res) => {
     res.sendFile(path.resolve(__dirname, "src", "index.html"));
