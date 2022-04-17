@@ -1,3 +1,4 @@
+import Http from "../../global/functions/http.function.js";
 import CoreView from "/src/config/views/core.view.js";
 
 export default class extends CoreView {
@@ -7,19 +8,8 @@ export default class extends CoreView {
     };
 
     async get_html() {
-        return `
-            <div 
-                style="
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: center;
-                    align-items: center;
-                    min-height: 100vh;
-                "
-            >
-                <h1>Kwenify</h1>
-                <p>version 1.0.0</p>
-            </div>
-        `;
+        let home_template = await Http.get("/src/config/templates/home.template.html");
+
+        return home_template;
     };
 };

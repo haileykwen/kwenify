@@ -7,30 +7,41 @@ const Component = new function() {
         return converted_text;
     };
 
-    this.render = function(target_element_selector, element_to_be_embed) {
+    let component = function(
+        target_element_selector, 
+        element_to_be_embed, 
+        type = "render" || "append" || "prepend"
+    ) {
         let target_element = document.querySelector(target_element_selector);
-        if (!target_element) 
-            throw new Error(`render error, target element with given selector "${target_element_selector}" not found`);
+        let converted_element = text_to_element(element_to_be_embed);
+        
+        if (!target_element)
+            throw new Error(`${type} error, target element with given selector "${target_element_selector}" not found`);
         // console.log(`target element with given selector "${target_element_selector}" found`, target_element);
-        target_element.innerHTML = element_to_be_embed;
+
+        switch(type) {
+            case "render":
+                target_element.innerHTML = element_to_be_embed;
+                break;
+            case "append":
+                target_element.append(converted_element);
+                break;
+            case "prepend":
+                target_element.prepend(converted_element);
+                break;
+        };
+    };
+
+    this.render = function(target_element_selector, element_to_be_embed) {
+        component(target_element_selector, element_to_be_embed, "render");
     };
 
     this.append = function(target_element_selector, element_to_be_embed) {
-        let target_element = document.querySelector(target_element_selector);
-        let converted_element = text_to_element(element_to_be_embed);
-        if (!target_element)
-            throw new Error(`append error, target element with given selector "${target_element_selector}" not found`);
-        // console.log(`target element with given selector "${target_element_selector}" found`, target_element);
-        target_element.append(converted_element);
+        component(target_element_selector, element_to_be_embed, "append");
     };
 
     this.prepend = function(target_element_selector, element_to_be_embed) {
-        let target_element = document.querySelector(target_element_selector);
-        let converted_element = text_to_element(element_to_be_embed);
-        if (!target_element)
-            throw new Error(`prepend error, target element with given selector "${target_element_selector}" not found`);
-        // console.log(`target element with given selector "${target_element_selector}" found`, target_element);
-        target_element.prepend(converted_element);
+        component(target_element_selector, element_to_be_embed, "prepend");
     };
 };
 

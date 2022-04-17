@@ -1,28 +1,46 @@
 const Http = new function() {
-    let create_options = function(method, data) {
-        return {
-            method: method, // *GET, POST, PUT, DELETE, etc.
+    let make_options = function(method, data) {
+        let options = {
+            mode: "no-cors",
             headers: {
                 'Content-Type': 'application/json'
-                // 'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: JSON.stringify(data) // body data type must match "Content-Type" header?,
+            }
         };
+
+        options.method = method;
+
+        if (data != null || data != undefined)
+            options.body = JSON.stringify(data);
+
+        return options;  
     };
 
-    let make_http_request = async function(url, method, data) {
-        let options = {};
-        if (method && data)
-            options = create_options(method, data);
-        let request = await fetch(url, options)
-            .then(async response => await response.json())
+    let make_config = function(url, method, data) {
+        let options = make_options(method, data);
+        return [url, options];
+    };
+
+    let make_http_request = async function(
+        url, 
+        method = "GET" || "POST" || "PUT" || "DELETE", 
+        data
+    ) {
+        let request = await fetch(...make_config(url, method, data))
+            .then(async response => {
+                if (url.includes("html")) {
+                    return await response.text();
+                }
+
+                await response.json();
+            })
             .then(response => response)
             .catch(error => error);
+
         return request;
     };
-
-    this.get = async function(url) {
-        let response = await make_http_request(url);
+    
+    this.get = async function(url, data) {
+        let response = await make_http_request(url, "GET", data);
         return response;
     };
 
