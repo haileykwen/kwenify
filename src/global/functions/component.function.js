@@ -50,12 +50,23 @@ const Component = new function() {
         if (!is_style_exist) {
             let link = document.createElement('link');
             link.setAttribute('rel', 'stylesheet');
-            link.setAttribute('id', 'global-login');
+            link.setAttribute('id', id);
             link.type = 'text/css';
             link.href = file_path;
             document.head.appendChild(link);
         };
     };
+
+    this.add_script = function(id, file_path) {
+        let is_script_exist = document.querySelector(id);
+
+        if (!is_script_exist) {
+            let script = document.createElement('script');
+            script.setAttribute('id', id);
+            script.src = file_path;
+            document.body.appendChild(script);
+        };
+    }
 };
 
 export default Component;

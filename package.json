@@ -1,7 +1,6 @@
 {
   "name": "@haileykwen/kwenify",
-  "version": "2.0.0",
-  "description": "SPA low code library using express",
+  "version": "1.0.0",
   "bin": "./bin/cli.js",
   "main": "server.js",
   "scripts": {
