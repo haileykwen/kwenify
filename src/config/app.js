@@ -40,9 +40,11 @@ async function router() {
 
     const view = new match.route.view(get_params(match));
 
+    view.prerender && await view.prerender();
+
     document.querySelector("#app").innerHTML = await view.get_html();
     
-    if (match.route.controller) match.route.controller();
+    match.route.controller && match.route.controller();
 };
 
 window.addEventListener("popstate", router);

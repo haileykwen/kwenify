@@ -7,6 +7,10 @@ export default class {
         document.title = title;
     };
 
+    async prerender() {
+        return "";
+    };
+
     async get_html() {
         return "";
     };
