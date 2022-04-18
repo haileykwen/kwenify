@@ -43,6 +43,19 @@ const Component = new function() {
     this.prepend = function(target_element_selector, element_to_be_embed) {
         component(target_element_selector, element_to_be_embed, "prepend");
     };
+
+    this.add_style = function(id, file_path) {
+        let is_style_exist = document.querySelector(id);
+
+        if (!is_style_exist) {
+            let link = document.createElement('link');
+            link.setAttribute('rel', 'stylesheet');
+            link.setAttribute('id', 'global-login');
+            link.type = 'text/css';
+            link.href = file_path;
+            document.head.appendChild(link);
+        };
+    };
 };
 
 export default Component;
