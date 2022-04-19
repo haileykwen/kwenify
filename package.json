@@ -1,6 +1,6 @@
 {
   "name": "@haileykwen/kwenify",
-  "version": "1.0.5",
+  "version": "1.0.8",
   "bin": "./bin/cli.js",
   "main": "server.js",
   "scripts": {
