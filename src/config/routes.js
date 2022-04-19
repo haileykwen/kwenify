@@ -1,10 +1,7 @@
 import { HomeView, DocumentationView } from "/src/config/views/index.view.js";
 import { HomeController, DocumentationController } from "/src/config/controllers/index.controller.js";
 
-import { 
-    LoginView,
-    LoginController
-} from "/src/global/templates/index.template.js";
+import GlobalRoutes from "/src/global/config/global_routes.js";
 
 export default function() {
     return [
@@ -18,10 +15,7 @@ export default function() {
             view: DocumentationView, 
             controller: DocumentationController 
         },
-        { 
-            path: "/global/login", 
-            view: LoginView, 
-            controller: LoginController 
-        }
+
+        ...GlobalRoutes()
     ];
 };
